@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { API_URL } from '../config';
 import { 
   AreaChart, 
   Area, 
@@ -61,7 +62,6 @@ export const Analytics: React.FC = () => {
     }
   }
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
   const rocPlotUrl = `${API_URL}/static/metrics/roc_curve.png`;
 
   return (

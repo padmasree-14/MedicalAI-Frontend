@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
 import { 
   UploadCloud, 
   Sparkles, 
@@ -86,7 +87,6 @@ export const Prediction: React.FC = () => {
     formData.append('patient_name', patientName);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const response = await api.post('/api/predict', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'

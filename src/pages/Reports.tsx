@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
 import { 
   FileDown, 
   AlertCircle, 
@@ -43,7 +44,6 @@ export const Reports: React.FC = () => {
 
   const handleDownloadPDF = () => {
     if (!predictionId) return;
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
     const url = `${API_URL}/api/reports/download/${predictionId}`;
     window.open(url, '_blank');
   };
@@ -96,7 +96,6 @@ export const Reports: React.FC = () => {
   }
 
   const { prediction, report_text } = report;
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
   const originalUrl = `${API_URL}${prediction.original_url.replace(API_URL, '')}`;
   const gradcamUrl = prediction.gradcam_url ? `${API_URL}${prediction.gradcam_url.replace(API_URL, '')}` : null;
 

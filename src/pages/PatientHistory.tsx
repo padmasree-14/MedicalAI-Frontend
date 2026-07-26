@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
 import { 
   Search, 
   Trash2, 
@@ -55,7 +56,6 @@ export const PatientHistory: React.FC = () => {
   const handleDownloadPDF = async (id: string, event: React.MouseEvent) => {
     event.stopPropagation();
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const downloadUrl = `${API_URL}/api/reports/download/${id}`;
       // Open download URL in new tab or trigger directly
       window.open(downloadUrl, '_blank');
@@ -130,7 +130,6 @@ export const PatientHistory: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-slate-50 font-medium text-slate-700">
                 {filteredHistory.map((item) => {
-                  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
                   const origThumb = `${API_URL}${item.original_url.replace(API_URL, '')}`;
                   
                   return (
