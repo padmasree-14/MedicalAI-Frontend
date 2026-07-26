@@ -100,14 +100,25 @@ export const Prediction: React.FC = () => {
     formData.append('patient_name', patientName);
 
     try {
-      const response = await api.post('/api/predict', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      let response;
+      try {
+        response = await api.post('/api/predict', formData);
+      } catch (err1: any) {
+        console.warn("Primary /api/predict endpoint failed, trying /predict alias...", err1);
+        response = await api.post('/predict', formData);
+      }
+      
       const data = response.data;
-      if (data.prediction.original_url) data.prediction.original_url = `${API_URL}${data.prediction.original_url}`;
-      if (data.prediction.gradcam_url) data.prediction.gradcam_url = `${API_URL}${data.prediction.gradcam_url}`;
+      if (data.prediction?.original_url) {
+        if (!data.prediction.original_url.startsWith('http')) {
+          data.prediction.original_url = `${API_URL}${data.prediction.original_url}`;
+        }
+      }
+      if (data.prediction?.gradcam_url) {
+        if (!data.prediction.gradcam_url.startsWith('http')) {
+          data.prediction.gradcam_url = `${API_URL}${data.prediction.gradcam_url}`;
+        }
+      }
       
       setResult(data);
       setActiveTab('gradcam');
