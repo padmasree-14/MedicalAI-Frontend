@@ -27,6 +27,19 @@ export const Prediction: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'original' | 'gradcam'>('original');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const parseErrorMsg = (err: any): string => {
+    if (!err) return 'Prediction request failed.';
+    if (err.response?.data?.detail) {
+      const detail = err.response.data.detail;
+      if (typeof detail === 'string') return detail;
+      if (Array.isArray(detail)) return detail.map((d: any) => d.msg || d.detail || JSON.stringify(d)).join(' | ');
+      if (typeof detail === 'object') return JSON.stringify(detail);
+    }
+    if (err.response?.data?.message) return err.response.data.message;
+    if (err.message) return `${err.message} (Target API: ${API_URL})`;
+    return 'Scan prediction failed. Verify backend services.';
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
@@ -92,16 +105,15 @@ export const Prediction: React.FC = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      // Append base url to response relative URLs
       const data = response.data;
       if (data.prediction.original_url) data.prediction.original_url = `${API_URL}${data.prediction.original_url}`;
       if (data.prediction.gradcam_url) data.prediction.gradcam_url = `${API_URL}${data.prediction.gradcam_url}`;
       
       setResult(data);
-      setActiveTab('gradcam'); // Auto-switch to heatmap
+      setActiveTab('gradcam');
     } catch (err: any) {
-      console.error(err);
-      setError(err.response?.data?.detail || "Scan prediction failed. Verify backend services.");
+      console.error("Prediction submit error:", err);
+      setError(parseErrorMsg(err));
     } finally {
       setLoading(false);
     }
@@ -190,9 +202,9 @@ export const Prediction: React.FC = () => {
             </button>
 
             {error && (
-              <div className="flex items-center gap-2 rounded-xl bg-rose-50 px-4 py-3 text-xs font-semibold text-rose-600">
-                <AlertCircle size={14} className="shrink-0" />
-                <span>{error}</span>
+              <div className="flex items-start gap-2 rounded-xl bg-rose-50 px-4 py-3 text-xs font-semibold text-rose-600">
+                <AlertCircle size={14} className="shrink-0 mt-0.5" />
+                <span className="break-words leading-relaxed">{error}</span>
               </div>
             )}
 
