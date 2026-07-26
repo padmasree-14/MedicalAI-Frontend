@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import type { AxiosInstance } from 'axios';
 
 interface User {
   id: string;
@@ -15,7 +16,7 @@ interface AuthContextType {
   login: (token: string) => Promise<boolean>;
   logout: () => void;
   updateUser: (clinicName: string) => void;
-  api: typeof axios;
+  api: AxiosInstance;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);

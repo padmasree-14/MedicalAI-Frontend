@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Activity, ArrowRight, AlertCircle } from 'lucide-react';
+import { Activity, ArrowRight } from 'lucide-react';
 
 export const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();

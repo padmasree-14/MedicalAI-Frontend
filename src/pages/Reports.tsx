@@ -3,13 +3,11 @@ import { useAuth } from '../context/AuthContext';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { 
   FileDown, 
-  Activity, 
   AlertCircle, 
   ChevronLeft,
   FileText,
   ShieldAlert,
-  Clock,
-  Briefcase
+  Clock
 } from 'lucide-react';
 
 export const Reports: React.FC = () => {

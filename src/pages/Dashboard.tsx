@@ -191,7 +191,7 @@ export const Dashboard: React.FC = () => {
                     paddingAngle={3}
                     dataKey="value"
                   >
-                    {diseaseDistribution.map((entry, index) => (
+                    {diseaseDistribution.map((_, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>

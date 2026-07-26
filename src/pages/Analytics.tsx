@@ -11,8 +11,6 @@ import {
   Legend
 } from 'recharts';
 import { 
-  ShieldCheck, 
-  Percent, 
   LineChart, 
   Grid3X3,
   Award

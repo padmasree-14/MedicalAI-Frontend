@@ -6,9 +6,7 @@ import {
   Building, 
   Lock, 
   CheckCircle2, 
-  AlertCircle,
-  Clock,
-  ShieldCheck
+  AlertCircle
 } from 'lucide-react';
 
 export const Profile: React.FC = () => {

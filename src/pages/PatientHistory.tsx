@@ -8,8 +8,7 @@ import {
   Download, 
   AlertCircle,
   Clock,
-  Sparkles,
-  ExternalLink
+  Sparkles
 } from 'lucide-react';
 
 export const PatientHistory: React.FC = () => {
